@@ -1,4 +1,7 @@
-# Python
+# ============================================
+# PYTHON
+# ============================================
+
 __pycache__/
 *.py[cod]
 *$py.class
@@ -9,42 +12,78 @@ venv/
 env/
 ENV/
 
-# Python build files
+# Python build/package files
 build/
 dist/
 *.egg-info/
 
-# Datasets
+
+# ============================================
+# DATASETS
+# ============================================
+
+# Raw datasets
 data/raw/
+data/raw/ESC-50/
+
+# Processed/generated data
 data/processed/
 data/splits/
 
-# Audio files
+
+# ============================================
+# AUDIO FILES
+# ============================================
+
 *.wav
 *.m4a
 *.mp3
 *.flac
 *.ogg
 
-# Model cache / temporary files
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+
 *.log
 *.tmp
 *.temp
 
-# macOS
+
+# ============================================
+# MACOS
+# ============================================
+
 .DS_Store
 
-# VS Code
+
+# ============================================
+# VS CODE
+# ============================================
+
 .vscode/
 
-# Jupyter
+
+# ============================================
+# JUPYTER
+# ============================================
+
 .ipynb_checkpoints/
 
-# Environment / secrets
+
+# ============================================
+# ENVIRONMENT / SECRETS
+# ============================================
+
 .env
 .env.*
 !.env.example
 
-# IMPORTANT:
-# Do NOT ignore .pt because we want to upload:
-# models/best_cnn.pt
+
+# ============================================
+# MODELS
+# ============================================
+
+# Intentionally NOT ignoring .pt/.pth files.
+# models/best_cnn.pt will be uploaded to GitHub.
