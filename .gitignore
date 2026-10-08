@@ -1,39 +1,88 @@
-# Virtual environment
-.venv/
-venv/
-env/
-
+# ============================================
 # Python
+# ============================================
+
 __pycache__/
 *.py[cod]
 *$py.class
 
-# macOS
-.DS_Store
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
 
-# VS Code
-.vscode/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Logs
-*.log
-
-# Build files
+# Python build / packaging
 build/
 dist/
 *.egg-info/
 
-# Datasets and generated data
+
+# ============================================
+# Datasets & Generated Data
+# ============================================
+
+# Large raw datasets
 data/raw/
+
+# Processed audio chunks and features
 data/processed/
+
+# Dataset splits / generated files
 data/splits/
 
-# Audio files
+
+# ============================================
+# Audio Files
+# ============================================
+
 *.wav
 *.m4a
 *.mp3
+*.flac
+*.ogg
 
-# Environment
+
+# ============================================
+# Temporary / Generated Files
+# ============================================
+
+*.log
+*.tmp
+*.temp
+
+.DS_Store
+
+
+# ============================================
+# VS Code
+# ============================================
+
+.vscode/
+
+
+# ============================================
+# Jupyter
+# ============================================
+
+.ipynb_checkpoints/
+
+
+# ============================================
+# Environment / Secrets
+# ============================================
+
 .env
+.env.*
+!.env.example
+
+
+# ============================================
+# Model Files
+# ============================================
+
+# Do NOT ignore .pt files.
+# best_cnn.pt is only ~372 KB and should be uploaded.
+#
+# models/*.pt
+# models/*.pth
