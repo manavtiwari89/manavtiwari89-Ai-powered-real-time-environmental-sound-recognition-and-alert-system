@@ -1,89 +1,44 @@
-# ============================================
-# PYTHON
-# ============================================
-
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# Virtual environments
 .venv/
 venv/
 env/
-ENV/
 
-# Python build/package files
-build/
-dist/
-*.egg-info/
-
-
-# ============================================
-# DATASETS
-# ============================================
-
-# Raw datasets
+# Datasets and generated data
 data/raw/
-data/raw/ESC-50/
-
-# Processed/generated data
 data/processed/
 data/splits/
 
-
-# ============================================
-# AUDIO FILES
-# ============================================
-
+# Audio files
 *.wav
 *.m4a
 *.mp3
 *.flac
 *.ogg
 
+# Model files
+models/*.pt
+models/*.pth
 
-# ============================================
-# TEMPORARY FILES
-# ============================================
-
-*.log
-*.tmp
-*.temp
-
-
-# ============================================
-# MACOS
-# ============================================
-
+# macOS
 .DS_Store
 
-
-# ============================================
-# VS CODE
-# ============================================
-
+# VS Code
 .vscode/
 
-
-# ============================================
-# JUPYTER
-# ============================================
-
+# Jupyter
 .ipynb_checkpoints/
 
+# Logs
+*.log
 
-# ============================================
-# ENVIRONMENT / SECRETS
-# ============================================
-
+# Environment/secrets
 .env
 .env.*
 !.env.example
 
-
-# ============================================
-# MODELS
-# ============================================
-
-# Intentionally NOT ignoring .pt/.pth files.
-# models/best_cnn.pt will be uploaded to GitHub.
+# Build files
+build/
+dist/
+*.egg-info/
