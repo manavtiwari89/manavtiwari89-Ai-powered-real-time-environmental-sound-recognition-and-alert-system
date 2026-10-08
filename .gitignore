@@ -1,7 +1,4 @@
-# ============================================
 # Python
-# ============================================
-
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,77 +9,42 @@ venv/
 env/
 ENV/
 
-# Python build / packaging
+# Python build files
 build/
 dist/
 *.egg-info/
 
-
-# ============================================
-# Datasets & Generated Data
-# ============================================
-
-# Large raw datasets
+# Datasets
 data/raw/
-
-# Processed audio chunks and features
 data/processed/
-
-# Dataset splits / generated files
 data/splits/
 
-
-# ============================================
-# Audio Files
-# ============================================
-
+# Audio files
 *.wav
 *.m4a
 *.mp3
 *.flac
 *.ogg
 
-
-# ============================================
-# Temporary / Generated Files
-# ============================================
-
+# Model cache / temporary files
 *.log
 *.tmp
 *.temp
 
+# macOS
 .DS_Store
 
-
-# ============================================
 # VS Code
-# ============================================
-
 .vscode/
 
-
-# ============================================
 # Jupyter
-# ============================================
-
 .ipynb_checkpoints/
 
-
-# ============================================
-# Environment / Secrets
-# ============================================
-
+# Environment / secrets
 .env
 .env.*
 !.env.example
 
-
-# ============================================
-# Model Files
-# ============================================
-
-# Do NOT ignore .pt files.
-# best_cnn.pt is only ~372 KB and should be uploaded.
-#
-# models/*.pt
-# models/*.pth
+# IMPORTANT:
+# Do NOT ignore .pt because we want to upload:
+# models/best_cnn.pt
