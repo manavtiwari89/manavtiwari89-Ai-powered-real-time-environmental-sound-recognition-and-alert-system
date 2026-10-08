@@ -1,44 +1,87 @@
-# Python
+# ============================================
+# PYTHON
+# ============================================
+
 __pycache__/
 *.py[cod]
+*$py.class
+
+# Virtual environments
 .venv/
 venv/
 env/
+ENV/
 
-# Datasets and generated data
+# Python build/package files
+build/
+dist/
+*.egg-info/
+
+
+# ============================================
+# DATASETS
+# ============================================
+
+# Large raw datasets
 data/raw/
 data/processed/
 data/splits/
 
-# Audio files
+
+# ============================================
+# AUDIO FILES
+# ============================================
+
 *.wav
 *.m4a
 *.mp3
 *.flac
 *.ogg
 
-# Model files
+
+# ============================================
+# MODEL FILES
+# ============================================
+
+# Don't upload trained model files for now
 models/*.pt
 models/*.pth
 
-# macOS
+
+# ============================================
+# TEMPORARY / GENERATED FILES
+# ============================================
+
+*.log
+*.tmp
+*.temp
+
+
+# ============================================
+# MACOS
+# ============================================
+
 .DS_Store
 
-# VS Code
+
+# ============================================
+# VS CODE
+# ============================================
+
 .vscode/
 
-# Jupyter
+
+# ============================================
+# JUPYTER
+# ============================================
+
 .ipynb_checkpoints/
 
-# Logs
-*.log
 
-# Environment/secrets
+# ============================================
+# ENVIRONMENT / SECRETS
+# ============================================
+
 .env
 .env.*
 !.env.example
-
-# Build files
-build/
-dist/
-*.egg-info/
