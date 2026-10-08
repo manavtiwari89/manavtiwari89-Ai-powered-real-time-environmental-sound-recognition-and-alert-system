@@ -3,7 +3,7 @@
 venv/
 env/
 
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -20,21 +20,20 @@ __pycache__/
 # Logs
 *.log
 
-# Python build files
+# Build files
 build/
 dist/
 *.egg-info/
 
-# Processed/generated data
+# Datasets and generated data
+data/raw/
 data/processed/
+data/splits/
 
-# Raw datasets
-data/raw/ESC-50/
-
-# Temporary audio files
+# Audio files
 *.wav
 *.m4a
 *.mp3
 
-# Environment files
+# Environment
 .env
