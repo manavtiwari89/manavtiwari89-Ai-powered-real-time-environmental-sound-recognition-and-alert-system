@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Low-Fidelity Wireframe</title>
+<style>
+  :root{
+    --black:#000;
+    --white:#fff;
+    --g1:#f5f5f5;
+    --g2:#e8e8e8;
+    --g3:#d4d4d4;
+    --g4:#a8a8a8;
+    --g5:#707070;
+    --line:1px solid #000;
+    --line2:2px solid #000;
+    --dash:1px dashed #000;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Helvetica Neue",Arial,sans-serif;
+    background:var(--g2);
+    color:var(--black);
+    -webkit-font-smoothing:antialiased;
+  }
+  .frame-strip{
+    padding:14px 18px 0 18px;
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--g5);
+    text-transform:uppercase;
+    font-weight:bold;
+  }
+  .app-shell{
+    width:1280px;
+    max-width:100%;
+    aspect-ratio:16/9;
+    min-height:720px;
+    margin:10px auto 40px auto;
+    background:var(--white);
+    border:var(--line2);
+    display:flex;
+    overflow:hidden;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:190px;
+    flex:0 0 190px;
+    border-right:var(--line2);
+    display:flex;
+    flex-direction:column;
+    background:var(--white);
+  }
+  .logo-block{
+    padding:18px 14px;
+    border-bottom:var(--line);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo-mark{
+    width:26px;height:26px;
+    border:var(--line2);
+    border-radius:50%;
+    flex:0 0 auto;
+  }
+  .logo-text{font-weight:bold;font-size:14px;letter-spacing:0.5px;}
+  .nav-list{list-style:none;margin:0;padding:8px 0;flex:1;}
+  .nav-item{
+    padding:11px 16px;
+    font-size:12px;
+    letter-spacing:0.3px;
+    border-left:4px solid transparent;
+    cursor:pointer;
+    color:var(--g5);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav-item .ic{width:14px;height:14px;border:var(--line);flex:0 0 auto;}
+  .nav-item.active{
+    border-left:4px solid var(--black);
+    background:var(--g1);
+    color:var(--black);
+    font-weight:bold;
+  }
+  .nav-item:hover{background:var(--g1);}
+  .sidebar-foot{
+    border-top:var(--line);
+    padding:10px 14px;
+    font-size:9px;
+    color:var(--g4);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+
+  /* ---------- MAIN ---------- */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{
+    border-bottom:var(--line2);
+    padding:12px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .page-title{font-size:16px;font-weight:bold;}
+  .topbar-right{display:flex;gap:10px;align-items:center;}
+  .status-pill{
+    border:var(--line);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    padding:5px 10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--black);}
+  .dot.off{background:var(--g3);}
+
+  .content{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+  }
+
+  /* ---------- GENERIC BLOCKS ---------- */
+  .card{
+    border:var(--line2);
+    background:var(--white);
+    margin-bottom:18px;
+  }
+  .card-head{
+    border-bottom:var(--line);
+    padding:9px 14px;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:0.8px;
+    text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--g1);
+  }
+  .card-body{padding:16px;}
+  .row{display:flex;gap:18px;}
+  .col{flex:1;min-width:0;}
+
+  .btn{
+    border:var(--line2);
+    background:var(--white);
+    color:var(--black);
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:9px 16px;
+    cursor:pointer;
+  }
+  .btn:hover{background:var(--black);color:var(--white);}
+  .btn.ghost{background:var(--white);}
+  .btn.small{padding:5px 10px;font-size:10px;}
+  .btn-row{display:flex;gap:10px;margin-top:12px;}
+
+  .placeholder-icon{
+    border:var(--dash);
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--g5);text-transform:uppercase;letter-spacing:0.4px;
+    flex:0 0 auto;
+  }
+
+  label.field-label{
+    display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;
+    color:var(--g5);margin-bottom:5px;font-weight:bold;
+  }
+  input[type=text], select{
+    width:100%;border:var(--line);padding:8px 10px;font-size:12px;font-family:inherit;background:var(--white);
+  }
+
+  /* waveform bars */
+  .waveform{
+    border:var(--line);
+    background:var(--g1);
+    display:flex;align-items:flex-end;gap:2px;
+    padding:10px;
+    overflow:hidden;
+  }
+  .wf-bar{flex:1;background:var(--black);}
+
+  /* probability bars */
+  .prob-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;}
+  .prob-label{width:110px;flex:0 0 auto;}
+  .prob-track{flex:1;height:12px;border:var(--line);background:var(--white);position:relative;}
+  .prob-fill{height:100%;background:var(--black);}
+  .prob-pct{width:40px;text-align:right;flex:0 0 auto;font-weight:bold;}
+
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th,td{border:var(--line);padding:8px 10px;text-align:left;}
+  th{background:var(--g1);text-transform:uppercase;font-size:10px;letter-spacing:0.5px;}
+  .tag{border:var(--line);padding:2px 8px;font-size:10px;text-transform:uppercase;display:inline-block;}
+  .tag.confirmed{background:var(--g1);font-weight:bold;}
+  .tag.uncertain{background:var(--white);}
+  .tag.unknown{background:var(--g3);}
+
+  .state-switcher{
+    display:flex;gap:6px;padding:12px 16px;border-bottom:var(--line);background:var(--g1);flex-wrap:wrap;
+  }
+  .state-btn{
+    border:var(--line);background:var(--white);font-size:10px;padding:6px 10px;cursor:pointer;
+    text-transform:uppercase;letter-spacing:0.3px;
+  }
+  .state-btn.active{background:var(--black);color:var(--white);font-weight:bold;}
+
+  .badge-level{
+    display:inline-block;border:var(--line2);padding:4px 12px;font-size:12px;font-weight:bold;
+    letter-spacing:0.6px;text-transform:uppercase;
+  }
+
+  .toggle{
+    border:var(--line);width:44px;height:22px;position:relative;cursor:pointer;flex:0 0 auto;
+  }
+  .toggle .knob{position:absolute;top:1px;bottom:1px;width:18px;border:var(--line);background:var(--white);}
+  .toggle.on{background:var(--g1);}
+  .toggle.on .knob{right:1px;background:var(--black);}
+  .toggle.off .knob{left:1px;}
+
+  .slider-track{height:6px;border:var(--line);background:var(--g1);position:relative;}
+  .slider-fill{height:100%;background:var(--black);}
+  .slider-handle{
+    position:absolute;top:-6px;width:16px;height:16px;border:var(--line2);background:var(--white);border-radius:50%;
+    transform:translateX(-50%);
+  }
+
+  .flow-diagram{font-size:11px;text-align:center;line-height:1.9;}
+  .flow-box{
+    display:inline-block;border:var(--line);padding:8px 14px;margin:4px;background:var(--white);
+  }
+  .flow-arrow{color:var(--g5);font-weight:bold;}
+  .flow-branch{display:flex;justify-content:center;gap:24px;margin:6px 0;flex-wrap:wrap;}
+
+  .muted{color:var(--g5);}
+  .hint{font-size:11px;color:var(--g5);margin-top:6px;}
+
+  .modal-overlay{
+    position:absolute;inset:0;background:rgba(0,0,0,0.55);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .alert-modal{
+    width:360px;border:var(--line2);background:var(--white);text-align:center;
+  }
+  .alert-modal-head{
+    border-bottom:var(--line2);padding:16px;font-weight:bold;font-size:13px;letter-spacing:0.5px;
+  }
+  .alert-icon-lg{
+    width:54px;height:54px;border:var(--line2);border-radius:50%;margin:18px auto 8px auto;
+    display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;
+  }
+
+  .sound-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .sound-card{
+    border:var(--line);padding:16px 10px;text-align:center;font-size:12px;font-weight:bold;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .sound-card .placeholder-icon{width:34px;height:34px;border-radius:50%;}
+  .sound-card.add{border:var(--dash);color:var(--g5);cursor:pointer;justify-content:center;}
+
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-thumb{background:var(--g3);}
+</style>
+</head>
+<body>
+
+<div class="frame-strip">Low-Fidelity UX Wireframe — AI-Powered Real-Time Environmental Sound Recognition &amp; Alert System</div>
+
+<div class="app-shell">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo-block">
+      <div class="logo-mark"></div>
+      <div class="logo-text">Audio AI</div>
+    </div>
+    <ul class="nav-list" id="navList">
+      <li class="nav-item active" data-screen="dashboard"><span class="ic"></span>Dashboard</li>
+      <li class="nav-item" data-screen="history"><span class="ic"></span>Event History</li>
+      <li class="nav-item" data-screen="classes"><span class="ic"></span>Sound Classes</li>
+      <li class="nav-item" data-screen="alerts"><span class="ic"></span>Alerts</li>
+      <li class="nav-item" data-screen="settings"><span class="ic"></span>Settings</li>
+      <li class="nav-item" data-screen="flow"><span class="ic"></span>User Flow</li>
+    </ul>
+    <div class="sidebar-foot">v0.1 Wireframe</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="pageTitle">Live Monitoring</div>
+      <div class="topbar-right" id="topbarRight">
+        <div class="status-pill"><span class="dot"></span>Mic: Listening</div>
+        <div class="status-pill"><span class="dot"></span>System OK</div>
+      </div>
+    </div>
+    <div class="content" id="content" style="position:relative;"></div>
+  </div>
+</div>
+
+<script>
+const content = document.getElementById('content');
+const pageTitle = document.getElementById('pageTitle');
+const topbarRight = document.getElementById('topbarRight');
+
+function waveformHTML(bars, h){
+  h = h || 70;
+  let html = '<div class="waveform" style="height:'+h+'px;">';
+  for(let i=0;i<bars;i++){
+    const height = 15 + Math.round(Math.abs(Math.sin(i*0.7))*70) + (i%5===0?10:0);
+    html += '<div class="wf-bar" style="height:'+height+'%;"></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function probRow(label, pct){
+  return `<div class="prob-row">
+    <div class="prob-label">${label}</div>
+    <div class="prob-track"><div class="prob-fill" style="width:${pct}%;"></div></div>
+    <div class="prob-pct">${pct}%</div>
+  </div>`;
+}
+
+/* ---------------- DASHBOARD ---------------- */
+const dashStates = ['high','medium','low','recording','confirmed'];
+let currentState = 'high';
+
+function dashboardTopbar(){
+  topbarRight.innerHTML = `
+    <div class="status-pill"><span class="dot"></span>Mic: Listening</div>
+    <div class="status-pill"><span class="dot"></span>System OK</div>`;
+}
+
+function aiAnalysisCard(){
+  let inner = '';
+  if(currentState === 'high'){
+    inner = `
+      <div style="margin-bottom:12px;">
+        <span class="badge-level">High Confidence</span>
+        <span class="muted" style="margin-left:10px;font-size:11px;">Status: Sound Identified</span>
+      </div>
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Most Likely</div>
+      <div style="font-size:22px;font-weight:bold;margin-bottom:10px;">Door Knock — 94%</div>
+      ${probRow('Door Knock',94)}
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 4px;">Other Possibilities</div>
+      ${probRow('Doorbell',3)}
+      ${probRow('Clap',2)}
+      ${probRow('Dog Bark',1)}
+      <div class="btn-row">
+        <button class="btn ghost" onclick="setState('recording')">Provide More Audio</button>
+        <button class="btn ghost small" onclick="setState('confirmed')">Record Event →</button>
+      </div>`;
+  } else if(currentState === 'medium'){
+    inner = `
+      <div style="margin-bottom:12px;">
+        <span class="badge-level">Medium Confidence</span>
+      </div>
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Most Likely</div>
+      <div style="font-size:22px;font-weight:bold;margin-bottom:10px;">Door Knock — 67%</div>
+      ${probRow('Door Knock',67)}
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 4px;">Other Possibilities</div>
+      ${probRow('Doorbell',21)}
+      ${probRow('Clap',8)}
+      ${probRow('Dog Bark',4)}
+      <div class="card" style="margin:12px 0 0 0;background:var(--g1);">
+        <div class="card-body" style="padding:10px 14px;font-size:11px;">
+          "The AI needs more evidence to confirm this sound."
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="setState('recording')">Provide More Audio</button>
+        <button class="btn ghost small" onclick="setState('confirmed')">Record Event →</button>
+      </div>`;
+  } else if(currentState === 'low'){
+    inner = `
+      <div style="margin-bottom:12px;">
+        <span class="badge-level" style="background:var(--g3);border-color:var(--black);">Unknown</span>
+      </div>
+      <div class="card" style="margin-bottom:12px;background:var(--g1);">
+        <div class="card-body" style="padding:10px 14px;font-size:11px;">
+          "Sound cannot be identified with sufficient confidence."
+        </div>
+      </div>
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Most Likely</div>
+      <div style="font-size:20px;font-weight:bold;margin-bottom:10px;">Door Knock — 38%</div>
+      ${probRow('Door Knock',38)}
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin:12px 0 4px;">Other Possibilities</div>
+      ${probRow('Clap',27)}
+      ${probRow('Dog Bark',20)}
+      ${probRow('Doorbell',15)}
+      <div class="btn-row">
+        <button class="btn" onclick="setState('recording')">Provide More Audio</button>
+        <button class="btn ghost small" onclick="setState('confirmed')">Record Event →</button>
+        <button class="btn ghost" onclick="setState('high')">Ignore</button>
+      </div>`;
+  } else if(currentState === 'recording'){
+    inner = `
+      <div style="margin-bottom:10px;">
+        <span class="badge-level">Recording Additional Evidence</span>
+      </div>
+      <div class="row" style="align-items:center;margin-bottom:10px;">
+        <div class="placeholder-icon" style="width:30px;height:30px;border-radius:50%;">MIC</div>
+        <div class="muted" style="font-size:11px;">Listening for additional audio...</div>
+        <div style="margin-left:auto;font-weight:bold;font-size:12px;">00:02 / 00:05</div>
+      </div>
+      ${waveformHTML(48,60)}
+      <div style="border:1px solid #000;height:6px;margin-top:10px;background:var(--g1);">
+        <div style="width:40%;height:100%;background:var(--black);"></div>
+      </div>
+      <div class="muted" style="font-size:11px;margin-top:10px;">Analyzing additional audio...</div>
+      <div class="btn-row">
+        <button class="btn ghost" onclick="setState('medium')">Stop</button>
+      </div>`;
+  } else if(currentState === 'confirmed'){
+    inner = `
+      <div style="margin-bottom:12px;">
+        <span class="badge-level">Sound Confirmed</span>
+      </div>
+      <div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Prediction Progression</div>
+      <table style="margin-bottom:12px;">
+        <tr><th>Stage</th><th>Door Knock</th><th>Doorbell</th><th>Clap</th><th>Dog Bark</th></tr>
+        <tr><td>Initial</td><td>42%</td><td>31%</td><td>18%</td><td>9%</td></tr>
+        <tr><td>After Additional Audio</td><td>71%</td><td>19%</td><td>7%</td><td>3%</td></tr>
+        <tr><td><strong>Final</strong></td><td><strong>89%</strong></td><td>7%</td><td>3%</td></tr>
+      </table>
+      <div style="font-size:22px;font-weight:bold;">Door Knock — 89%</div>
+      ${probRow('Door Knock',89)}
+      <div class="btn-row">
+        <button class="btn">Record Event</button>
+      </div>`;
+  }
+  return inner;
+}
+
+function renderDashboard(){
+  pageTitle.textContent = 'Live Monitoring';
+  dashboardTopbar();
+  content.innerHTML = `
+    <div class="row" style="align-items:stretch;">
+      <div class="col" style="flex:1.1;">
+        <div class="card">
+          <div class="card-head">Live Audio Input <span style="font-weight:normal;">00:12</span></div>
+          <div class="card-body">
+            <div class="row" style="align-items:center;margin-bottom:10px;">
+              <div class="placeholder-icon" style="width:34px;height:34px;border-radius:50%;">MIC</div>
+              <div>
+                <div style="font-weight:bold;font-size:12px;">Microphone Active</div>
+                <div class="muted" style="font-size:10px;">ON / OFF</div>
+              </div>
+              <div class="toggle on" style="margin-left:auto;"><div class="knob"></div></div>
+            </div>
+            ${waveformHTML(60,100)}
+            <div class="hint">Live Audio Waveform — represents raw microphone input, not the AI prediction.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">Recent Detected Events</div>
+          <div class="card-body" style="padding:0;">
+            <table>
+              <tr><th>Time</th><th>Sound</th><th>Confidence</th><th>Status</th></tr>
+              <tr><td>21:53</td><td>Door Knock</td><td>94%</td><td><span class="tag confirmed">Confirmed</span></td></tr>
+              <tr><td>21:51</td><td>Dog Bark</td><td>91%</td><td><span class="tag confirmed">Confirmed</span></td></tr>
+              <tr><td>21:49</td><td>Clap</td><td>63%</td><td><span class="tag uncertain">Uncertain</span></td></tr>
+              <tr><td>21:47</td><td>Siren</td><td>96%</td><td><span class="tag confirmed">Confirmed</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col" style="flex:0.9;">
+        <div class="card">
+          <div class="card-head">AI Sound Analysis</div>
+          <div class="state-switcher">
+            <button class="state-btn ${currentState==='high'?'active':''}" onclick="setState('high')">1. High</button>
+            <button class="state-btn ${currentState==='medium'?'active':''}" onclick="setState('medium')">2. Medium</button>
+            <button class="state-btn ${currentState==='low'?'active':''}" onclick="setState('low')">3. Low</button>
+            <button class="state-btn ${currentState==='recording'?'active':''}" onclick="setState('recording')">4. More Audio</button>
+            <button class="state-btn ${currentState==='confirmed'?'active':''}" onclick="setState('confirmed')">5. Confirmed</button>
+          </div>
+          <div class="card-body" id="aiAnalysisBody">
+            ${aiAnalysisCard()}
+          </div>
+        </div>
+        <div class="hint" style="padding:0 4px;">Use the buttons above to preview each AI confidence state (for wireframe demonstration only).</div>
+      </div>
+    </div>
+  `;
+}
+
+function setState(s){
+  currentState = s;
+  renderDashboard();
+}
+
+/* ---------------- EVENT HISTORY ---------------- */
+function renderHistory(){
+  pageTitle.textContent = 'Event History';
+  topbarRight.innerHTML = `<div class="status-pill"><span class="dot"></span>142 Events Logged</div>`;
+  content.innerHTML = `
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label class="field-label">Search</label>
+            <input type="text" placeholder="Search events...">
+          </div>
+          <div class="col">
+            <label class="field-label">Sound Filter</label>
+            <select><option>All Sounds</option><option>Door Knock</option><option>Siren</option></select>
+          </div>
+          <div class="col">
+            <label class="field-label">Date Filter</label>
+            <select><option>Today</option><option>Last 7 Days</option><option>Custom Range</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">All Events <button class="btn small" onclick="alert('Wireframe only')">Clear History</button></div>
+      <div class="card-body" style="padding:0;">
+        <table>
+          <tr><th>Time</th><th>Sound</th><th>Confidence</th><th>Status</th><th>Alert</th></tr>
+          <tr><td>21:53</td><td>Door Knock</td><td>94%</td><td><span class="tag confirmed">Confirmed</span></td><td>—</td></tr>
+          <tr><td>21:51</td><td>Dog Bark</td><td>91%</td><td><span class="tag confirmed">Confirmed</span></td><td>—</td></tr>
+          <tr><td>21:49</td><td>Clap</td><td>63%</td><td><span class="tag uncertain">Uncertain</span></td><td>—</td></tr>
+          <tr><td>21:47</td><td>Siren</td><td>96%</td><td><span class="tag confirmed">Confirmed</span></td><td>Triggered</td></tr>
+          <tr><td>21:40</td><td>—</td><td>34%</td><td><span class="tag unknown">Unknown</span></td><td>—</td></tr>
+          <tr><td>21:35</td><td>Glass Break</td><td>97%</td><td><span class="tag confirmed">Confirmed</span></td><td>Triggered</td></tr>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------- SOUND CLASSES ---------------- */
+function renderClasses(){
+  pageTitle.textContent = 'Sound Classes';
+  topbarRight.innerHTML = `<div class="status-pill"><span class="dot"></span>10 Classes Active</div>`;
+  const sounds = ['Door Knock','Doorbell','Dog Bark','Baby Cry','Siren','Alarm','Clap','Glass Break','Laughter','Background / Other'];
+  let cards = sounds.map(s => `<div class="sound-card"><div class="placeholder-icon">ICON</div>${s}</div>`).join('');
+  content.innerHTML = `
+    <div class="card">
+      <div class="card-head">Supported Sound Classes</div>
+      <div class="card-body">
+        <div class="sound-grid">
+          ${cards}
+          <div class="sound-card add">+ Add Custom Sound</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Add Custom Sound — Conceptual Flow</div>
+      <div class="card-body">
+        <label class="field-label">Sound Name</label>
+        <input type="text" placeholder="e.g. Microwave Beep" style="margin-bottom:14px;">
+        <div class="row" style="align-items:center;margin-bottom:14px;">
+          <div class="placeholder-icon" style="width:60px;height:60px;">WAVEFORM</div>
+          <button class="btn">Record</button>
+          <div class="muted" style="font-size:11px;">Number of Samples: <strong>0 / 10</strong></div>
+        </div>
+        <button class="btn ghost">Train / Add Sound</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------- ALERTS ---------------- */
+let alertPopupSound = 'ALARM';
+function renderAlerts(){
+  pageTitle.textContent = 'Alerts';
+  topbarRight.innerHTML = `<div class="status-pill"><span class="dot"></span>5 Alerts Enabled</div>`;
+  const rows = [
+    ['Doorbell','on'],['Baby Cry','on'],['Siren','on'],['Alarm','on'],['Glass Break','on'],['Dog Bark','off']
+  ];
+  let rowsHtml = rows.map(([name,state]) => `
+    <div class="row" style="align-items:center;padding:9px 0;border-bottom:1px solid #ddd;">
+      <div style="flex:1;font-size:12px;">${name}</div>
+      <div class="toggle ${state}"><div class="knob"></div></div>
+    </div>`).join('');
+  content.innerHTML = `
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-head">Alert Triggers</div>
+          <div class="card-body">${rowsHtml}</div>
+        </div>
+        <div class="card">
+          <div class="card-head">Confidence Threshold</div>
+          <div class="card-body">
+            <div class="slider-track">
+              <div class="slider-fill" style="width:80%;"></div>
+              <div class="slider-handle" style="left:80%;"></div>
+            </div>
+            <div class="hint">Threshold: 80% — alerts trigger only above this confidence.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-head">Notification Settings</div>
+          <div class="card-body">
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Desktop Notification</div>
+              <div class="toggle on"><div class="knob"></div></div>
+            </div>
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Sound Notification</div>
+              <div class="toggle on"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">Preview Alert Popup</div>
+          <div class="card-body">
+            <div class="btn-row" style="margin-top:0;">
+              <button class="btn small" onclick="showAlertPopup('ALARM')">Preview: Alarm</button>
+              <button class="btn small ghost" onclick="showAlertPopup('GLASS BREAK')">Preview: Glass Break</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="popupHost"></div>
+  `;
+}
+
+function showAlertPopup(sound){
+  alertPopupSound = sound;
+  document.getElementById('popupHost').innerHTML = `
+    <div class="modal-overlay" style="position:fixed;">
+      <div class="alert-modal">
+        <div class="alert-modal-head">🚨 ALERT — CRITICAL SOUND DETECTED</div>
+        <div class="alert-icon-lg">!</div>
+        <div style="font-size:20px;font-weight:bold;margin-bottom:4px;">${sound}</div>
+        <div class="muted" style="font-size:12px;">Confidence: 96%</div>
+        <div class="muted" style="font-size:11px;margin-bottom:16px;">Time: 21:55:32</div>
+        <div style="border-top:1px solid #000;padding:14px;">
+          <button class="btn" onclick="document.getElementById('popupHost').innerHTML=''">Dismiss</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------- SETTINGS ---------------- */
+function renderSettings(){
+  pageTitle.textContent = 'Settings';
+  topbarRight.innerHTML = `<div class="status-pill"><span class="dot"></span>All Systems OK</div>`;
+  content.innerHTML = `
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-head">Microphone</div>
+          <div class="card-body">
+            <label class="field-label">Microphone Selection</label>
+            <select><option>Default Microphone</option><option>USB Microphone</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-head">Notifications</div>
+          <div class="card-body">
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Desktop Notifications</div>
+              <div class="toggle on"><div class="knob"></div></div>
+            </div>
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Alert Sound</div>
+              <div class="toggle on"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">Privacy</div>
+          <div class="card-body">
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Store Raw Audio</div>
+              <div class="toggle off"><div class="knob"></div></div>
+            </div>
+            <div class="row" style="align-items:center;padding:8px 0;">
+              <div style="flex:1;font-size:12px;">Store Event History</div>
+              <div class="toggle on"><div class="knob"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------- USER FLOW ---------------- */
+function renderFlow(){
+  pageTitle.textContent = 'User Flow — Overall Navigation';
+  topbarRight.innerHTML = `<div class="status-pill"><span class="dot"></span>System Diagram</div>`;
+  content.innerHTML = `
+    <div class="card">
+      <div class="card-head">Working</div>
+      <div class="card-body flow-diagram">
+        <div class="flow-box">🎙️ Microphone Input</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">Live Waveform (Always Moving)</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">Audio Window</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">Mel Spectrogram</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">CNN Inference Engine</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">Prediction Output</div><div class="flow-arrow">↓</div>
+        <div class="flow-box">Evaluate Confidence Level</div><div class="flow-arrow">↓</div>
+        <div class="flow-branch">
+          <div class="flow-box">
+            <strong>HIGH (≥80%)</strong><br>
+            <span class="muted" style="font-size:10px;">Status: Confirmed</span><br>
+            <span style="font-size:10px;font-weight:bold;">[Record Event] / [Provide More Audio]</span>
+          </div>
+          <div class="flow-box">
+            <strong>MEDIUM (50–79%)</strong><br>
+            <span class="muted" style="font-size:10px;">Status: Analyzing</span><br>
+            <span style="font-size:10px;font-weight:bold;">[Record Event] / [Provide More Audio]</span>
+          </div>
+          <div class="flow-box">
+            <strong>LOW (&lt;50%)</strong><br>
+            <span class="muted" style="font-size:10px;">Status: Unknown</span><br>
+            <span style="font-size:10px;font-weight:bold;">[Record Event] / [Provide More Audio]</span>
+          </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-branch">
+          <div class="flow-box">
+            <strong>Action: Record Event</strong><br>
+            <span class="muted" style="font-size:10px;">Committed to Event History Log</span>
+          </div>
+          <div class="flow-box">
+            <strong>Action: Provide More Audio</strong><br>
+            <span class="muted" style="font-size:10px;">Re-samples &amp; Updates Inference</span>
+          </div>
+        </div>
+        <div class="flow-arrow">↓ (if logged)</div>
+        <div class="flow-box">Check Notification Rules (🚨 If Important)</div><div class="flow-arrow">↓</div>
+        <div class="flow-box"><strong>Trigger System Alert Popup / Sound</strong></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Screen Navigation Map</div>
+      <div class="card-body flow-diagram">
+        <div class="flow-box">Dashboard</div><div class="flow-arrow">↓</div>
+        <div class="flow-branch">
+          <div class="flow-box">Event History</div>
+          <div class="flow-box">Sound Classes</div>
+          <div class="flow-box">Alerts</div>
+          <div class="flow-box">Settings</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------- ROUTER ---------------- */
+const screens = {
+  dashboard: renderDashboard,
+  history: renderHistory,
+  classes: renderClasses,
+  alerts: renderAlerts,
+  settings: renderSettings,
+  flow: renderFlow
+};
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    screens[item.dataset.screen]();
+  });
+});
+
+renderDashboard();
+</script>
+</body>
+</html>
